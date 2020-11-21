@@ -1,8 +1,12 @@
-// import "./App.css";
-// import React from "react";
-//
-// function App() {
-//   return <div className="App">Start project</div>;
-// }
-//
-// export default App;
+import React from "react";
+import Routes from './routes'
+
+function App() {
+  return (
+      <>
+        <Routes />
+      </>
+  )
+}
+
+export default App;

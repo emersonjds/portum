@@ -1,10 +1,10 @@
-import react from 'React';
+import React from 'react';
 
-export default function App() {
+export default function Home() {
     return (
         <div className="App">
             <h1>
-                Started
+                Home
             </h1>
         </div>
     )
