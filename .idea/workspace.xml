@@ -20,17 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7efaf92e-e92a-4d87-91eb-475e4775f387" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/LineComponent/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/LineComponent/styles.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/TableComponent/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json.save" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Card/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Card/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Navbar/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/img/graneleiro.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/img/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TableComponent/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TableComponent/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Home/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Home/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Home/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Home/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +53,11 @@
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/assets/img" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -67,7 +66,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1605993339025</updated>
-      <workItem from="1605993342520" duration="2115000" />
+      <workItem from="1605993342520" duration="3499000" />
     </task>
     <servers />
   </component>
