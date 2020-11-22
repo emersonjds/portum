@@ -40,7 +40,7 @@ const getEstadiaByLote = async(loteType) => {
 }
 
 const getClimaTempoTabuaMares = async (cod, mes, ano) => {
-  const url = `${API_URL}/tabua_mares/50225/11/20`
+  const url = `${API_URL}/tabua_mares/50225/12/19`
 
   const response = await fetch(url)
   console.log(response)
@@ -78,6 +78,28 @@ function diffDays(init, finish) {
   return diffDays + 1;
 }
 
+function diffHours(init, finish) {
+  let dateInit = init;
+  var temp = dateInit.split(" ");
+  dateInit = temp[0].split("/").reverse().join("-") + " " + temp[1];
+
+  let dateFinish = finish;
+  var temp = dateFinish.split(" ");
+  dateFinish = temp[0].split("/").reverse().join("-") + " " + temp[1];
+
+  // console.log(dateInit, dateFinish);
+
+  dateFinish = new Date(dateFinish);
+  dateInit = new Date(dateInit);
+
+  var init = moment(dateInit, "DD-MM-YYYY HH:mm");
+  var finish = moment(dateFinish, "DD-MM-YYYY HH:mm");
+
+  var diffDays = finish.diff(init, "hours");
+
+  return diffDays;
+}
+
 
 export default function Home() {
 
@@ -90,92 +112,120 @@ export default function Home() {
 
     getEstadiaByLote('Granel Sólido').then(estadiasData => {
 
-      const _estadiasData = estadiasData.map(estadiaItem => {
-        //slaAtracacaoPrevLimit
-        let slaAtracacaoPrevLimit = estadiaItem["Atracação Prevista"];
-        var temp = slaAtracacaoPrevLimit.split(" ");
-        slaAtracacaoPrevLimit =
-          temp[0].split("/").reverse().join("-") + " " + temp[1];
-        slaAtracacaoPrevLimit = new Date(slaAtracacaoPrevLimit);
-        slaAtracacaoPrevLimit = slaAtracacaoPrevLimit.getHours() + 2;
+      // getClimaTempoTabuaMares(50225, 11, 19).then((tabuaMaresData) => {
+      //   console.log("getClimaTempoTabuaMares RESPONSE", tabuaMaresData);
+      //   setTabuaMares(tabuaMaresData);
 
-        //slaAtracacaoEfetLimit
-        let slaAtracacaoEfetLimit = estadiaItem["Atracação Efetiva"];
-        var temp = slaAtracacaoEfetLimit.split(" ");
-        slaAtracacaoEfetLimit =
-          temp[0].split("/").reverse().join("-") + " " + temp[1];
-        slaAtracacaoEfetLimit = new Date(slaAtracacaoEfetLimit);
-        slaAtracacaoEfetLimit = slaAtracacaoEfetLimit.getHours() + 3;
 
-        //difDaysAtracacao
-        const difDaysAtracacao = diffDays(
-          estadiaItem["Atracação Prevista"],
-          estadiaItem["Atracação Efetiva"]
-        );
+        const _estadiasData = estadiasData.map(estadiaItem => {
 
-        //difDaysAtracacao
-        const difDaysDesatracacao = diffDays(
-          estadiaItem["Desatracação Prevista"],
-          estadiaItem["Desatracação Efetiva"]
-        );
+          // // Realiza chegagem na tabua de marés
+          // let dataAtracacaoPrev = estadiaItem["Atracação Prevista"];
+          // var temp = dataAtracacaoPrev.split(" ");
+          // dataAtracacaoPrev =
+          //   temp[0].split("/").reverse().join("-") + " " + temp[1];
+          // dataAtracacaoPrev = new Date(dataAtracacaoPrev);
+            
 
-        //diffDaysPrev
-        const diffDaysPrev = diffDays(
-          estadiaItem["Atracação Prevista"],
-          estadiaItem["Desatracação Prevista"]
-        );
+          // // console.log('HAHAH', dataAtracacaoPrev)
+          // const tabuaMareItemMatch = tabuaMaresData.filter(tabuaMareItem => {
 
-        //diffDaysEfet
-        const diffDaysEfet = diffDays(
-          estadiaItem["Atracação Efetiva"],
-          estadiaItem["Desatracação Efetiva"]
-        );
+          //    let dataTabuaMare = tabuaMareItem.data + " " + tabuaMareItem.item1.horario
+          //    var temp = dataTabuaMare.split(" ");
+          //    dataTabuaMare =
+          //      temp[0].split("/").reverse().join("-") + " " + temp[1];
+          //    dataTabuaMare = new Date(dataTabuaMare);
+            
+          // });
 
-        // Define RADOM para preenchimento
-        let statusEmbarcacao = '';
 
-        const randomDesatracado = getRandomInt(0, 4)
+          //slaAtracacaoPrevLimit
+          let slaAtracacaoPrevLimit = estadiaItem["Atracação Prevista"];
+          var temp = slaAtracacaoPrevLimit.split(" ");
+          slaAtracacaoPrevLimit =
+            temp[0].split("/").reverse().join("-") + " " + temp[1];
+          slaAtracacaoPrevLimit = new Date(slaAtracacaoPrevLimit);
+          slaAtracacaoPrevLimit = slaAtracacaoPrevLimit.getHours() + 2;
+  
+          //slaAtracacaoEfetLimit
+          let slaAtracacaoEfetLimit = estadiaItem["Atracação Efetiva"];
+          var temp = slaAtracacaoEfetLimit.split(" ");
+          slaAtracacaoEfetLimit =
+            temp[0].split("/").reverse().join("-") + " " + temp[1];
+          slaAtracacaoEfetLimit = new Date(slaAtracacaoEfetLimit);
+          slaAtracacaoEfetLimit = slaAtracacaoEfetLimit.getHours() + 3;
+  
+          //difDaysAtracacao
+          const difDaysAtracacao = diffDays(
+            estadiaItem["Atracação Prevista"],
+            estadiaItem["Atracação Efetiva"]
+          );
+  
+          //difDaysAtracacao
+          const difDaysDesatracacao = diffDays(
+            estadiaItem["Desatracação Prevista"],
+            estadiaItem["Desatracação Efetiva"]
+          );
+  
+          //diffDaysPrev
+          const diffDaysPrev = diffDays(
+            estadiaItem["Atracação Prevista"],
+            estadiaItem["Desatracação Prevista"]
+          );
+  
+          //diffDaysEfet
+          const diffDaysEfet = diffDays(
+            estadiaItem["Atracação Efetiva"],
+            estadiaItem["Desatracação Efetiva"]
+          );
+  
+          // Define RADOM para preenchimento
+          let statusEmbarcacao = '';
+  
+          const randomDesatracado = getRandomInt(0, 4)
+  
+          if (randomDesatracado == 0) {
+            estadiaItem["Atracação Prevista"] = "";
+            estadiaItem["Atracação Efetiva"] = "";
+            estadiaItem["Desatracação Prevista"] = "";
+            estadiaItem["Desatracação Efetiva"] = "";
+  
+            statusEmbarcacao = "Aguardando Autorizacao";
+          } else if (randomDesatracado == 1) {
+            estadiaItem["Atracação Efetiva"] = "";
+            estadiaItem["Desatracação Efetiva"] = "";
+  
+            statusEmbarcacao = "A Atracar";
+          } else if (randomDesatracado == 2) {
+            estadiaItem["Desatracação Efetiva"] = "";
+  
+            statusEmbarcacao = "Atracado";
+          } else if (randomDesatracado == 3) {
+            statusEmbarcacao = "Desatracado";
+          }
+  
+          estadiaItem['Status'] = statusEmbarcacao
+  
+          return {
+            ...estadiaItem,
+            "Dif Dias Atracação": difDaysAtracacao,
+            "Dif Dias Desatracação": difDaysDesatracacao,
+            "SLA Previsto": diffDaysPrev == 0 ? 1 : diffDaysPrev,
+            "SLA Efetivo": diffDaysEfet,
+            "SLA Atracação Limit": slaAtracacaoPrevLimit,
+            "SLA Desatracação Limit": slaAtracacaoEfetLimit,
+          };
+        })
+  
+        setEstadias(_estadiasData)
+      });
 
-        if (randomDesatracado == 0) {
-          estadiaItem["Atracação Prevista"] = "";
-          estadiaItem["Atracação Efetiva"] = "";
-          estadiaItem["Desatracação Prevista"] = "";
-          estadiaItem["Desatracação Efetiva"] = "";
+    // })
 
-          statusEmbarcacao = "Aguardando Autorizacao";
-        } else if (randomDesatracado == 1) {
-          estadiaItem["Atracação Efetiva"] = "";
-          estadiaItem["Desatracação Efetiva"] = "";
-
-          statusEmbarcacao = "A Atracar";
-        } else if (randomDesatracado == 2) {
-          estadiaItem["Desatracação Efetiva"] = "";
-
-          statusEmbarcacao = "Atracado";
-        } else if (randomDesatracado == 3) {
-          statusEmbarcacao = "Desatracado";
-        }
-
-        estadiaItem['Status'] = statusEmbarcacao
-
-        return {
-          ...estadiaItem,
-          "Dif Dias Atracação": difDaysAtracacao,
-          "Dif Dias Desatracação": difDaysDesatracacao,
-          "SLA Previsto": diffDaysPrev == 0 ? 1 : diffDaysPrev,
-          "SLA Efetivo": diffDaysEfet,
-          "SLA Atracação Limit": slaAtracacaoPrevLimit,
-          "SLA Desatracação Limit": slaAtracacaoEfetLimit,
-        };
-      })
-
-      setEstadias(_estadiasData)
-    })
-
-    getClimaTempoTabuaMares(50225, 11, 19).then(climateData => {
-      console.log('getClimaTempoTabuaMares RESPONSE', climateData)
-      setTabuaMares(climateData)
-    })
+    // getClimaTempoTabuaMares(50225, 11, 19).then(climateData => {
+    //   console.log('getClimaTempoTabuaMares RESPONSE', climateData)
+    //   setTabuaMares(climateData)
+    // })
 
   }, [])
 
