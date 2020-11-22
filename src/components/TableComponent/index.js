@@ -171,7 +171,7 @@ export default function TableComponent(props) {
             // Desatracação Efetiva: "06/01/2017 17:20"
             // Desatracação Prevista: "06/01/2017 18:00"
             // Especialidade da Carga Predominante: "Granel Sólido"
-            // Estadia Off-Shore: "Não"
+            // Estadia Off-Shore: H"Não"
             // Finalidade da Embarcação: "Transporte de Granel Sólido e Carga Geral"
             // Local(is) Atracação (área do porto > berço > cabeço): "CAIS COMERCIAL > B104 > 22-29"
             // Local(is) e Data(s) Reatracação (área do porto > berço > ca: "(CAIS COMERCIAL > B104 > 22-29 = 06/01/2017 17:10)"

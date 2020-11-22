@@ -24,7 +24,7 @@ export default function CardComponent({
         }}
       >
         <CardBody>
-          <CardTitle tag="h5" style={{ color: "#000" }}>
+          <CardTitle tag="h5" style={{ color: "#000", textAlign: "center" }}>
             {title}
           </CardTitle>
           <CardText className="mb-2 text-muted">{contentCard}</CardText>

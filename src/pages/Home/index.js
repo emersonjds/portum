@@ -2,17 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 
 import NavbarComponent from "../../components/Navbar";
 import Chart from "../../components/Chart";
-import {
-  Row,
-  Col,
-  Button,
-  Table,
-  Badge,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-} from "reactstrap";
+import { Row, Col, Button, Table, Badge } from "reactstrap";
 import CardComponent from "../../components/Card";
 
 import { Container } from "./styles";
@@ -25,32 +15,28 @@ import moment from "moment";
 console.log("moment", moment);
 moment.locale("pt-br");
 
-const API_URL = 'https://brazik-hack-export.uc.r.appspot.com'
-const CLIMA_TEMPO_URL = 'https://www.climatempo.com.br'
+const API_URL = "https://brazik-hack-export.uc.r.appspot.com";
+const CLIMA_TEMPO_URL = "https://www.climatempo.com.br";
 
-const OPEN_WEATHER_API_KEY = 'c32ff90826e60c1b8eb4770926b0a0ee'
+const OPEN_WEATHER_API_KEY = "c32ff90826e60c1b8eb4770926b0a0ee";
 
-
-const getEstadiaByLote = async(loteType) => {
-  const url = `${API_URL}/estadias/${loteType}`
-  const response = await fetch(url)
-  const data = await response.json()
-  return data
-
-}
+const getEstadiaByLote = async (loteType) => {
+  const url = `${API_URL}/estadias/${loteType}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+};
 
 const getClimaTempoTabuaMares = async (cod, mes, ano) => {
   const url = `${API_URL}/tabua_mares/50225/12/19`
 
-  const response = await fetch(url)
-  console.log(response)
-  const data = await response.json()
-  return data
-}
+  const response = await fetch(url);
+  console.log(response);
+  const data = await response.json();
+  return data;
+};
 
-const getOpenWeaterClimate = async() => {
-
-}
+const getOpenWeaterClimate = async () => {};
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
@@ -102,11 +88,8 @@ function diffHours(init, finish) {
 
 
 export default function Home() {
-
-
-  const [estadias, setEstadias] = useState([])
-  const [tabuaMares, setTabuaMares] = useState([])
-  
+  const [estadias, setEstadias] = useState([]);
+  const [tabuaMares, setTabuaMares] = useState([]);
 
   useEffect(() => {
 
@@ -227,11 +210,14 @@ export default function Home() {
     //   setTabuaMares(climateData)
     // })
 
-  }, [])
+    getClimaTempoTabuaMares(50225, 11, 19).then((climateData) => {
+      console.log("getClimaTempoTabuaMares RESPONSE", climateData);
+      setTabuaMares(climateData);
+    });
+  }, []);
 
   return (
     <Fragment>
-      
       <NavbarComponent />
       <Container>
         <Row>
@@ -239,7 +225,7 @@ export default function Home() {
             <Weather />
           </Col>
           <Col md={10}>
-            <TabComponent dataSource={estadias}/>
+            <TabComponent dataSource={estadias} />
             <hr />
           </Col>
         </Row>
