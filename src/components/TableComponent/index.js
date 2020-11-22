@@ -201,7 +201,7 @@ export default function TableComponent(props) {
             }
 
             let statusColorDesatracacaoAtrasada = "";
-            if (slaDiff > 0) {
+            if (estadia["Dif Dias Atracação"] > 0) {
               statusColorDesatracacaoAtrasada = {
                 color: "red",
                 fontWeight: "bold",
@@ -213,7 +213,7 @@ export default function TableComponent(props) {
             }
 
             let statusColorBackgroundRow = "";
-            if (slaDiff > 0) {
+            if (slaDiff > 0 ) {
               statusColorBackgroundRow = {
                 background: "#ff00001a",
               };

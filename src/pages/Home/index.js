@@ -139,25 +139,25 @@ export default function Home() {
           slaAtracacaoEfetLimit = slaAtracacaoEfetLimit.getHours() + 3;
   
           //difDaysAtracacao
-          const difDaysAtracacao = diffDays(
+          let difDaysAtracacao = diffDays(
             estadiaItem["Atracação Prevista"],
             estadiaItem["Atracação Efetiva"]
           );
   
           //difDaysAtracacao
-          const difDaysDesatracacao = diffDays(
+          let difDaysDesatracacao = diffDays(
             estadiaItem["Desatracação Prevista"],
             estadiaItem["Desatracação Efetiva"]
           );
   
           //diffDaysPrev
-          const diffDaysPrev = diffDays(
+          let diffDaysPrev = diffDays(
             estadiaItem["Atracação Prevista"],
             estadiaItem["Desatracação Prevista"]
           );
   
           //diffDaysEfet
-          const diffDaysEfet = diffDays(
+          let diffDaysEfet = diffDays(
             estadiaItem["Atracação Efetiva"],
             estadiaItem["Desatracação Efetiva"]
           );
@@ -172,11 +172,17 @@ export default function Home() {
             estadiaItem["Atracação Efetiva"] = "";
             estadiaItem["Desatracação Prevista"] = "";
             estadiaItem["Desatracação Efetiva"] = "";
+            // difDaysAtracacao = ''
+            // difDaysDesatracacao = ''
+            
+            
   
             statusEmbarcacao = "Aguardando Autorizacao";
           } else if (randomDesatracado == 1) {
             estadiaItem["Atracação Efetiva"] = "";
             estadiaItem["Desatracação Efetiva"] = "";
+            // difDaysAtracacao = ''
+            // difDaysDesatracacao = ''
   
             statusEmbarcacao = "A Atracar";
           } else if (randomDesatracado == 2) {
@@ -188,7 +194,7 @@ export default function Home() {
           }
   
           estadiaItem['Status'] = statusEmbarcacao
-  
+          
           return {
             ...estadiaItem,
             "Dif Dias Atracação": difDaysAtracacao,
