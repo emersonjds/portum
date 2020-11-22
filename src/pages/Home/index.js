@@ -9,6 +9,10 @@ import { Container } from "./styles";
 import TableComponent from "../../components/TableComponent";
 import icon from "../../assets/img/icon.png";
 
+import estadias from './../../data/estadias.json'
+
+console.log(estadias)
+
 export default function Home() {
   return (
     <Fragment>
