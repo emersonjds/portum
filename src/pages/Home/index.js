@@ -11,6 +11,10 @@ import icon from "../../assets/img/icon.png";
 import Weather from "../../components/Weather";
 import TabComponent from "../../components/TabComponent";
 
+import moment from "moment";
+console.log("moment", moment);
+moment.locale("pt-br");
+
 const API_URL = 'https://brazik-hack-export.uc.r.appspot.com'
 const CLIMA_TEMPO_URL = 'https://www.climatempo.com.br'
 
@@ -42,6 +46,28 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+function diffDays(init, finish) {
+  let dateInit = init;
+  var temp = dateInit.split(" ");
+  dateInit = temp[0].split("/").reverse().join("-") + " " + temp[1];
+
+  let dateFinish = finish;
+  var temp = dateFinish.split(" ");
+  dateFinish = temp[0].split("/").reverse().join("-") + " " + temp[1];
+
+  // console.log(dateInit, dateFinish);
+
+  dateFinish = new Date(dateFinish);
+  dateInit = new Date(dateInit);
+
+  var init = moment(dateInit, "DD-MM-YYYY HH:mm");
+  var finish = moment(dateFinish, "DD-MM-YYYY HH:mm");
+
+  var diffDays = finish.diff(init, "days");
+
+  return diffDays + 1;
+}
+
 
 export default function Home() {
 
@@ -54,23 +80,41 @@ export default function Home() {
     getEstadiaByLote('Granel Sólido').then(estadiasData => {
 
       const _estadiasData = estadiasData.map(estadiaItem => {
-
+        //slaAtracacaoPrevLimit
         let slaAtracacaoPrevLimit = estadiaItem["Atracação Prevista"];
         var temp = slaAtracacaoPrevLimit.split(" ");
-        slaAtracacaoPrevLimit = temp[0].split("/").reverse().join("-") + " " + temp[1];
+        slaAtracacaoPrevLimit =
+          temp[0].split("/").reverse().join("-") + " " + temp[1];
         slaAtracacaoPrevLimit = new Date(slaAtracacaoPrevLimit);
-        slaAtracacaoPrevLimit = slaAtracacaoPrevLimit.getHours() + 2
+        slaAtracacaoPrevLimit = slaAtracacaoPrevLimit.getHours() + 2;
 
+        //slaAtracacaoEfetLimit
         let slaAtracacaoEfetLimit = estadiaItem["Atracação Prevista"];
         var temp = slaAtracacaoEfetLimit.split(" ");
-        slaAtracacaoEfetLimit = temp[0].split("/").reverse().join("-") + " " + temp[1];
+        slaAtracacaoEfetLimit =
+          temp[0].split("/").reverse().join("-") + " " + temp[1];
         slaAtracacaoEfetLimit = new Date(slaAtracacaoEfetLimit);
         slaAtracacaoEfetLimit = slaAtracacaoEfetLimit.getHours() + 3;
-        
+
+        //diffDaysPrev
+        const diffDaysPrev = diffDays(
+          estadiaItem["Atracação Prevista"],
+          estadiaItem["Desatracação Prevista"]
+        );
+
+        //diffDaysEfet
+        const diffDaysEfet = diffDays(
+          estadiaItem["Atracação Efetiva"],
+          estadiaItem["Desatracação Efetiva"]
+        );
+
+
         return {
           ...estadiaItem,
+          "SLA Previsto": diffDaysPrev,
+          "SLA Efetivo": diffDaysEfet,
           "SLA Atracação Limit": slaAtracacaoPrevLimit,
-          "SLA Desatracação Limit": slaAtracacaoEfetLimit
+          "SLA Desatracação Limit": slaAtracacaoEfetLimit,
         };
       })
 

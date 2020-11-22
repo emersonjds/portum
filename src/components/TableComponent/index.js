@@ -50,7 +50,6 @@ export default function TableComponent(props) {
   console.log("TableComponent", estadias);
 
   return (
-
     <Fragment>
       <h3>Atracações da Semana</h3>
       <Table size="sm">
@@ -66,6 +65,7 @@ export default function TableComponent(props) {
             <th>SLA Previsto</th>
             <th>SLA Efetivo</th>
             <th>SLA Diff</th>
+            <th>SLA Diff %</th>
             <th>SLA Limit Prev</th>
             <th>SLA Limit Efet</th>
           </tr>
@@ -74,19 +74,19 @@ export default function TableComponent(props) {
           {estadias.splice(-30, 20).map((estadia, index) => {
             console.log(estadia);
 
-            const diffDaysPrev = diffDays(
-              estadia["Atracação Prevista"],
-              estadia["Desatracação Prevista"]
-            );
-            console.log(diffDaysPrev);
-            console.log("============");
+            // const diffDaysPrev = diffDays(
+            //   estadia["Atracação Prevista"],
+            //   estadia["Desatracação Prevista"]
+            // );
+            // console.log(diffDaysPrev);
+            // console.log("============");
 
-            const diffDaysEfet = diffDays(
-              estadia["Atracação Efetiva"],
-              estadia["Desatracação Efetiva"]
-            );
-            console.log(diffDaysEfet);
-            console.log("============");
+            // const diffDaysEfet = diffDays(
+            //   estadia["Atracação Efetiva"],
+            //   estadia["Desatracação Efetiva"]
+            // );
+            // console.log(diffDaysEfet);
+            // console.log("============");
 
             // Atracação Efetiva: "03/01/2017 09:00"
             // Atracação Prevista: "24/12/2016 07:30"
@@ -106,6 +106,9 @@ export default function TableComponent(props) {
             // Tipo de Viagem Saída: "IMPORTAÇÃO/LONGO CURSO"
             // Área de Navegação: "IMPORT/EXPORT/LONGO CURSO"
 
+            let slaDiffPerc =(estadia["SLA Previsto"] - estadia["SLA Efetivo"]) / estadia["SLA Previsto"];
+            slaDiffPerc = Math.ceil(slaDiffPerc)
+
             return (
               <tr>
                 {/* <th>{estadia["Número do DUV"].slice(0, 10) + "..."}</th> */}
@@ -115,9 +118,10 @@ export default function TableComponent(props) {
                 <th>{estadia["Atracação Efetiva"]}</th>
                 <th>{estadia["Desatracação Efetiva"]}</th>
                 <th>{estadia["Desatracação Prevista"]}</th>
-                <th>{diffDaysPrev} Dias</th>
-                <th>{diffDaysEfet} Dias</th>
-                <th>{(diffDaysEfet-diffDaysPrev)}</th>
+                <th>{estadia["SLA Previsto"]}</th>
+                <th>{estadia["SLA Efetivo"]}</th>
+                <th>{estadia["SLA Previsto"] - estadia["SLA Efetivo"]}</th>
+                <th>{slaDiffPerc}%</th>
                 <th>{estadia["SLA Atracação Limit"]}</th>
                 <th>{estadia["SLA Desatracação Limit"]}</th>
               </tr>
