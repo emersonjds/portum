@@ -14,16 +14,14 @@ moment.locale("pt-br");
 //   .format('D[ day(s)] H[ hour(s)] m[ minute(s)] s[ second(s) ago.]')
 // );
 
-
 function diffDays(init, finish) {
-  let dateInit = init
+  let dateInit = init;
   var temp = dateInit.split(" ");
   dateInit = temp[0].split("/").reverse().join("-") + " " + temp[1];
 
   let dateFinish = finish;
   var temp = dateFinish.split(" ");
-  dateFinish =
-    temp[0].split("/").reverse().join("-") + " " + temp[1];
+  dateFinish = temp[0].split("/").reverse().join("-") + " " + temp[1];
 
   // console.log(
   //   estadia["Atracação Prevista"],
@@ -41,7 +39,7 @@ function diffDays(init, finish) {
   // console.log(diffDays);
   // console.log("============");
 
-  return diffDays + 1
+  return diffDays + 1;
 }
 
 export default function TableComponent(props) {
@@ -50,7 +48,6 @@ export default function TableComponent(props) {
   console.log("TableComponent", estadias);
 
   return (
-
     <Fragment>
       <h3>Atracações da Semana</h3>
       <Table size="sm">
@@ -109,17 +106,17 @@ export default function TableComponent(props) {
             return (
               <tr>
                 {/* <th>{estadia["Número do DUV"].slice(0, 10) + "..."}</th> */}
-                <th>{estadia["Bandeira da Embarcação"]}</th>
-                <th>Status</th>
-                <th>{estadia["Atracação Prevista"]}</th>
-                <th>{estadia["Atracação Efetiva"]}</th>
-                <th>{estadia["Desatracação Efetiva"]}</th>
-                <th>{estadia["Desatracação Prevista"]}</th>
-                <th>{diffDaysPrev} Dias</th>
-                <th>{diffDaysEfet} Dias</th>
-                <th>{(diffDaysEfet-diffDaysPrev)}</th>
-                <th>{estadia["SLA Atracação Limit"]}</th>
-                <th>{estadia["SLA Desatracação Limit"]}</th>
+                <td>{estadia["Bandeira da Embarcação"]}</td>
+                <td>Status</td>
+                <td>{estadia["Atracação Prevista"]}</td>
+                <td>{estadia["Atracação Efetiva"]}</td>
+                <td>{estadia["Desatracação Efetiva"]}</td>
+                <td>{estadia["Desatracação Prevista"]}</td>
+                <td>{diffDaysPrev} Dias</td>
+                <td>{diffDaysEfet} Dias</td>
+                <td>{diffDaysEfet - diffDaysPrev}</td>
+                <td>{estadia["SLA Atracação Limit"]}</td>
+                <td>{estadia["SLA Desatracação Limit"]}</td>
               </tr>
             );
           })}
