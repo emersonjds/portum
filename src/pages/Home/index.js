@@ -91,7 +91,6 @@ export default function Home() {
     getEstadiaByLote('Granel Sólido').then(estadiasData => {
 
       const _estadiasData = estadiasData.map(estadiaItem => {
-
         //slaAtracacaoPrevLimit
         let slaAtracacaoPrevLimit = estadiaItem["Atracação Prevista"];
         var temp = slaAtracacaoPrevLimit.split(" ");
@@ -101,12 +100,24 @@ export default function Home() {
         slaAtracacaoPrevLimit = slaAtracacaoPrevLimit.getHours() + 2;
 
         //slaAtracacaoEfetLimit
-        let slaAtracacaoEfetLimit = estadiaItem["Atracação Prevista"];
+        let slaAtracacaoEfetLimit = estadiaItem["Atracação Efetiva"];
         var temp = slaAtracacaoEfetLimit.split(" ");
         slaAtracacaoEfetLimit =
           temp[0].split("/").reverse().join("-") + " " + temp[1];
         slaAtracacaoEfetLimit = new Date(slaAtracacaoEfetLimit);
         slaAtracacaoEfetLimit = slaAtracacaoEfetLimit.getHours() + 3;
+
+        //difDaysAtracacao
+        const difDaysAtracacao = diffDays(
+          estadiaItem["Atracação Prevista"],
+          estadiaItem["Atracação Efetiva"]
+        );
+
+        //difDaysAtracacao
+        const difDaysDesatracacao = diffDays(
+          estadiaItem["Desatracação Prevista"],
+          estadiaItem["Desatracação Efetiva"]
+        );
 
         //diffDaysPrev
         const diffDaysPrev = diffDays(
@@ -120,16 +131,42 @@ export default function Home() {
           estadiaItem["Desatracação Efetiva"]
         );
 
-        
+        // Define RADOM para preenchimento
+        let statusEmbarcacao = '';
 
+        const randomDesatracado = getRandomInt(0, 4)
 
-          return {
-            ...estadiaItem,
-            "SLA Previsto": diffDaysPrev == 0 ? 1 : diffDaysPrev,
-            "SLA Efetivo": diffDaysEfet,
-            "SLA Atracação Limit": slaAtracacaoPrevLimit,
-            "SLA Desatracação Limit": slaAtracacaoEfetLimit,
-          };
+        if (randomDesatracado == 0) {
+          estadiaItem["Atracação Prevista"] = "";
+          estadiaItem["Atracação Efetiva"] = "";
+          estadiaItem["Desatracação Prevista"] = "";
+          estadiaItem["Desatracação Efetiva"] = "";
+
+          statusEmbarcacao = "Aguardando Autorizacao";
+        } else if (randomDesatracado == 1) {
+          estadiaItem["Atracação Efetiva"] = "";
+          estadiaItem["Desatracação Efetiva"] = "";
+
+          statusEmbarcacao = "A Atracar";
+        } else if (randomDesatracado == 2) {
+          estadiaItem["Desatracação Efetiva"] = "";
+
+          statusEmbarcacao = "Atracado";
+        } else if (randomDesatracado == 3) {
+          statusEmbarcacao = "Desatracado";
+        }
+
+        estadiaItem['Status'] = statusEmbarcacao
+
+        return {
+          ...estadiaItem,
+          "Dif Dias Atracação": difDaysAtracacao,
+          "Dif Dias Desatracação": difDaysDesatracacao,
+          "SLA Previsto": diffDaysPrev == 0 ? 1 : diffDaysPrev,
+          "SLA Efetivo": diffDaysEfet,
+          "SLA Atracação Limit": slaAtracacaoPrevLimit,
+          "SLA Desatracação Limit": slaAtracacaoEfetLimit,
+        };
       })
 
       setEstadias(_estadiasData)

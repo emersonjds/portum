@@ -56,10 +56,12 @@ export default function TableComponent(props) {
             {/* <th>Data</th> */}
             <th>Bandeira Embarcação</th>
             <th>Status</th>
-            <th>Ent. Prevista</th>
-            <th>Ent. Executada</th>
-            <th>Sai. Prevista</th>
-            <th>Sai. Executada</th>
+            <th>Atracação Prev</th>
+            <th>Atracação Exec</th>
+            <th>Dif Dias Atracação</th>
+            <th>Desatracação Prev</th>
+            <th>Desatracação Exec</th>
+            <th>Dif Dias Desatracação</th>
             <th>SLA Previsto</th>
             <th>SLA Efetivo</th>
             <th>SLA Diff</th>
@@ -104,23 +106,21 @@ export default function TableComponent(props) {
             // Tipo de Viagem Saída: "IMPORTAÇÃO/LONGO CURSO"
             // Área de Navegação: "IMPORT/EXPORT/LONGO CURSO"
 
-            let slaDiff = estadia["SLA Previsto"] - estadia["SLA Efetivo"]
+            let slaDiff = estadia["SLA Previsto"] - estadia["SLA Efetivo"];
 
             let slaDiffPerc = slaDiff / estadia["SLA Previsto"];
-            slaDiffPerc = Math.ceil(slaDiffPerc)
+            slaDiffPerc = Math.ceil(slaDiffPerc);
 
-
-            let statusColorAtracacaoAtrasada = ''
-            if(slaDiff > 0 ){
+            let statusColorAtracacaoAtrasada = "";
+            if (slaDiff > 0) {
               statusColorAtracacaoAtrasada = {
-                color: 'red',
-                fontWeight: 'bold'
-              }
-            }
-            else{
+                color: "red",
+                fontWeight: "bold",
+              };
+            } else {
               statusColorAtracacaoAtrasada = {
                 color: "black",
-              }
+              };
             }
 
             let statusColorDesatracacaoAtrasada = "";
@@ -135,33 +135,33 @@ export default function TableComponent(props) {
               };
             }
 
-            let statusColorBackgroundRow = ""
-            if(slaDiff > 0){
+            let statusColorBackgroundRow = "";
+            if (slaDiff > 0) {
               statusColorBackgroundRow = {
                 background: "#ff00001a",
               };
-            }
-            else{
+            } else {
               statusColorBackgroundRow = {
                 background: "white",
               };
             }
 
+
             return (
-              <tr
-                style={statusColorBackgroundRow}
-              >
+              <tr style={statusColorBackgroundRow}>
                 {/* <th>{estadia["Número do DUV"].slice(0, 10) + "..."}</th> */}
                 <td>{estadia["Bandeira da Embarcação"]}</td>
-                <td>Status</td>
+                <td>{estadia['Status']}</td>
                 <td>{estadia["Atracação Prevista"]}</td>
-                <td
-                  style={statusColorAtracacaoAtrasada}
-                >{estadia["Atracação Efetiva"]}</td>
+                <td style={statusColorAtracacaoAtrasada}>
+                  {estadia["Atracação Efetiva"]}
+                </td>
+                <td>{estadia["Dif Dias Atracação"]}</td>
                 <td>{estadia["Desatracação Prevista"]}</td>
-                <td
-                  style={statusColorDesatracacaoAtrasada}
-                >{estadia["Desatracação Efetiva"]}</td>
+                <td style={statusColorDesatracacaoAtrasada}>
+                  {estadia["Desatracação Efetiva"]}
+                </td>
+                <td>{estadia["Dif Dias Desatracação"]}</td>
                 <td>{estadia["SLA Previsto"]}</td>
                 <td>{estadia["SLA Efetivo"]}</td>
                 <td>{slaDiff}</td>
