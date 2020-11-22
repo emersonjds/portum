@@ -1,9 +1,7 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 export const Container = styled.div`
   height: 100%;
   width: 100%;
-  padding: 2em 6em;
-  
-`
-
+  padding: 2em;
+`;
