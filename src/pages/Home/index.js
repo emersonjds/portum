@@ -8,11 +8,61 @@ import CardComponent from "../../components/Card";
 import { Container } from "./styles";
 import TableComponent from "../../components/TableComponent";
 import icon from "../../assets/img/icon.png";
+import Weather from "../../components/Weather";
 
 export default function Home() {
   return (
     <Fragment>
       <NavbarComponent />
+      <Container>
+        <Row>
+          <Col md={2}>
+            <Weather />
+          </Col>
+          <Col md={10}>
+            <Row styles={{ marginBottom: "10px" }}>
+              <Col md={2}>
+                <CardComponent
+                  title={"Sla Executado"}
+                  contentCard={"17:32"}
+                ></CardComponent>
+              </Col>
+              <Col md={2}>
+                <CardComponent
+                  title={"Sla Executado"}
+                  contentCard={"17:32"}
+                ></CardComponent>
+              </Col>
+              <Col md={2}>
+                <CardComponent
+                  title={"Sla Executado"}
+                  contentCard={"17:32"}
+                ></CardComponent>
+              </Col>
+              <Col md={2}>
+                <CardComponent
+                  title={"Sla Executado"}
+                  contentCard={"17:32"}
+                ></CardComponent>
+              </Col>
+              <Col md={4}>
+                <CardComponent
+                  title={"Sla Executado"}
+                  contentCard={"17:32"}
+                ></CardComponent>
+              </Col>
+            </Row>
+
+            <br />
+            <Row>
+              <Col md={12}>
+                <TableComponent />
+              </Col>
+            </Row>
+            <hr />
+          </Col>
+        </Row>
+      </Container>
 
       <Container>
         {/*first row*/}
