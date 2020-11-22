@@ -14,7 +14,6 @@ import {
   FormGroup,
   Label,
   Input,
-  FormText,
 } from "reactstrap";
 import {
   VesselContainer,
@@ -22,8 +21,39 @@ import {
   RightAreaContainer,
   MiddleAreaContainer,
 } from "./styles";
-
 import vessel from "../../assets/img/vessel.jpg";
+
+const vessels = [
+  {
+    id: Math.random().toFixed * 2,
+    img: vessel,
+    name: "MSC Rossvelt",
+    tipo: "Graneleiro",
+    comprimento: "300 mt",
+    carga: "180 tn",
+    sla: "2 dias",
+  },
+  {
+    id: Math.random().toFixed * 2,
+    img:
+      "https://1.bp.blogspot.com/-fjdi0Z_yoSQ/UrikMP05WeI/AAAAAAAA8YE/mBr6FgYO8tA/s1600/Navio-Vale-Brasil.jpg",
+    name: "Vale Brasil",
+    tipo: "Graneleiro",
+    comprimento: "400 mt",
+    carga: "500tn",
+    sla: "4 dias",
+  },
+  {
+    id: Math.random().toFixed * 2,
+    img:
+      "https://1.bp.blogspot.com/-hD1lwqXhvTw/UpE4QihAJxI/AAAAAAAA7hk/N7v0gbnLLfc/s1600/Maersk-McKinney-Moller.jpg",
+    name: "Triple E",
+    tipo: "Cargueiro",
+    comprimento: "400 mt",
+    carga: "320tn",
+    sla: "8 dias",
+  },
+];
 
 const NavbarComponent = () => {
   const [modal, setModal] = useState(false);
@@ -35,36 +65,41 @@ const NavbarComponent = () => {
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Ajustar SLA</ModalHeader>
         <ModalBody>
-          <div>
-            <VesselContainer>
-              <LeftAreaContainer>
-                <img src={vessel} height="100%" width="100%" />
-              </LeftAreaContainer>
-              <MiddleAreaContainer>
-                <span style={{ fontWeight: "bold" }}>MSC Rossvelt</span> <br />
-                <span>Tipo: graneleiro</span>
-                <br />
-                <span>Carga: 180 tn</span>
-              </MiddleAreaContainer>
-              <RightAreaContainer>
-                <Form>
-                  <FormGroup>
-                    <Label for="exampleEmail" style={{ fontWeight: "bold" }}>
-                      SLA Atracação
-                    </Label>
-                    <Input
-                      plaintext
-                      value="2 dias"
-                      style={{ textAlign: "right", fontWeight: "bold" }}
-                    />
-                  </FormGroup>
-                </Form>
-              </RightAreaContainer>
-            </VesselContainer>
-            <Button color="info" size="sm" style={{ float: "right" }}>
-              Editar
-            </Button>{" "}
-          </div>
+          {vessels.map((vessel) => (
+            <div key={vessel.id}>
+              <VesselContainer>
+                <LeftAreaContainer>
+                  <img src={vessel.img} height="100%" width="100%" />
+                </LeftAreaContainer>
+                <MiddleAreaContainer>
+                  <span style={{ fontWeight: "bold" }}>{vessel.name}</span>{" "}
+                  <br />
+                  <span>Tipo: {vessel.tipo}</span>
+                  <br />
+                  <span>Carga: {vessel.carga}</span>
+                </MiddleAreaContainer>
+                <RightAreaContainer>
+                  <Form>
+                    <FormGroup>
+                      <Label for="exampleEmail" style={{ fontWeight: "bold" }}>
+                        SLA Atracação
+                      </Label>
+                      <Input
+                        plaintext
+                        value={vessel.sla}
+                        style={{ textAlign: "right", fontWeight: "bold" }}
+                      />
+                    </FormGroup>
+                  </Form>
+                </RightAreaContainer>
+              </VesselContainer>
+              <Button color="info" size="sm" style={{ float: "right" }}>
+                Editar
+              </Button>{" "}
+              <br />
+              <br />
+            </div>
+          ))}
         </ModalBody>
         <ModalFooter>
           <Button color="success" onClick={toggle}>
