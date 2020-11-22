@@ -9,6 +9,7 @@ import { Container } from "./styles";
 import TableComponent from "../../components/TableComponent";
 import icon from "../../assets/img/icon.png";
 import Weather from "../../components/Weather";
+import TabComponent from "../../components/TabComponent";
 
 export default function Home() {
   return (
@@ -20,52 +21,14 @@ export default function Home() {
             <Weather />
           </Col>
           <Col md={10}>
-            <Row styles={{ marginBottom: "10px" }}>
-              <Col md={2}>
-                <CardComponent
-                  title={"Sla Executado"}
-                  contentCard={"17:32"}
-                ></CardComponent>
-              </Col>
-              <Col md={2}>
-                <CardComponent
-                  title={"Sla Executado"}
-                  contentCard={"17:32"}
-                ></CardComponent>
-              </Col>
-              <Col md={2}>
-                <CardComponent
-                  title={"Sla Executado"}
-                  contentCard={"17:32"}
-                ></CardComponent>
-              </Col>
-              <Col md={2}>
-                <CardComponent
-                  title={"Sla Executado"}
-                  contentCard={"17:32"}
-                ></CardComponent>
-              </Col>
-              <Col md={4}>
-                <CardComponent
-                  title={"Sla Executado"}
-                  contentCard={"17:32"}
-                ></CardComponent>
-              </Col>
-            </Row>
-
-            <br />
-            <Row>
-              <Col md={12}>
-                <TableComponent />
-              </Col>
-            </Row>
+            <TabComponent />
             <hr />
           </Col>
         </Row>
       </Container>
 
-      <Container>
-        {/*first row*/}
+      {/* <Container>
+        
         <h2>Analise de 16/11 à 21/11</h2>
         <Row styles={{ marginBottom: "10px" }}>
           <Col md={2}>
@@ -129,7 +92,7 @@ export default function Home() {
             </Row>
           </Col>
         </Row>
-      </Container>
+      </Container> */}
     </Fragment>
   );
 }
