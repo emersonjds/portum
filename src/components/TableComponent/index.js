@@ -2,7 +2,8 @@ import React, {Fragment} from 'react';
 import {Table, Badge} from 'reactstrap';
 import icon from '../../assets/img/icon.png'
 
-export default function TableComponent() {
+export default function TableComponent(props) {
+
   return (
     <Fragment>
       <h3>Atracações da Semana</h3>
