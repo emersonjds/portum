@@ -8,9 +8,13 @@ import CardComponent from "../../components/Card";
 import { Container } from "./styles";
 import TableComponent from "../../components/TableComponent";
 import icon from "../../assets/img/icon.png";
+import Weather from "../../components/Weather";
+import TabComponent from "../../components/TabComponent";
 
-const API_URL = 'https://brazik-hack-export.uc.r.appspot.com/'
+const API_URL = 'https://brazik-hack-export.uc.r.appspot.com'
 const CLIMA_TEMPO_URL = 'https://www.climatempo.com.br'
+
+const OPEN_WEATHER_API_KEY = 'c32ff90826e60c1b8eb4770926b0a0ee'
 
 
 const getEstadiaByLote = async(loteType) => {
@@ -21,34 +25,82 @@ const getEstadiaByLote = async(loteType) => {
 
 }
 
-const getClimaTempoTabuaMaré = async () => {
-  const url = `${CLIMA_TEMPO_URL}/json/previsao-mare`
+const getClimaTempoTabuaMares = async (cod, mes, ano) => {
+  const url = `${API_URL}/tabua_mares/50225/11/20`
+
   const response = await fetch(url)
+  console.log(response)
   const data = await response.json()
   return data
 }
 
+const getOpenWeaterClimate = async() => {
 
+}
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
 
 
 export default function Home() {
 
 
   const [estadias, setEstadias] = useState([])
-  // const [tabuaMarés]
+  const [tabuaMares, setTabuaMares] = useState([])
 
   useEffect(() => {
-    getEstadiaByLote('Granel Sólido').then(data => {
-      setEstadias(data)
+
+    getEstadiaByLote('Granel Sólido').then(estadiasData => {
+
+      const _estadiasData = estadiasData.map(estadiaItem => {
+
+        let slaAtracacaoPrevLimit = estadiaItem["Atracação Prevista"];
+        var temp = slaAtracacaoPrevLimit.split(" ");
+        slaAtracacaoPrevLimit = temp[0].split("/").reverse().join("-") + " " + temp[1];
+        slaAtracacaoPrevLimit = new Date(slaAtracacaoPrevLimit);
+        slaAtracacaoPrevLimit = slaAtracacaoPrevLimit.getHours() + 2
+
+        let slaAtracacaoEfetLimit = estadiaItem["Atracação Prevista"];
+        var temp = slaAtracacaoEfetLimit.split(" ");
+        slaAtracacaoEfetLimit = temp[0].split("/").reverse().join("-") + " " + temp[1];
+        slaAtracacaoEfetLimit = new Date(slaAtracacaoEfetLimit);
+        slaAtracacaoEfetLimit = slaAtracacaoEfetLimit.getHours() + 3;
+        
+        return {
+          ...estadiaItem,
+          "SLA Atracação Limit": slaAtracacaoPrevLimit,
+          "SLA Desatracação Limit": slaAtracacaoEfetLimit
+        };
+      })
+
+      setEstadias(_estadiasData)
     })
+
+    getClimaTempoTabuaMares(50225, 11, 19).then(climateData => {
+      console.log('getClimaTempoTabuaMares RESPONSE', climateData)
+      setTabuaMares(climateData)
+    })
+
   }, [])
 
   return (
     <Fragment>
       <NavbarComponent />
-
       <Container>
-        {/*first row*/}
+        <Row>
+          <Col md={2}>
+            <Weather />
+          </Col>
+          <Col md={10}>
+            <TabComponent dataSource={estadias}/>
+            <hr />
+          </Col>
+        </Row>
+      </Container>
+
+      {/* <Container>
+        
         <h2>Analise de 16/11 à 21/11</h2>
 
           
@@ -143,10 +195,10 @@ export default function Home() {
             ></CardComponent>
           </Col>{" "}
           <Col md={4}>
-            <CardComponent>
-              <p>Eficiencia do Berço</p>
-              <h4>76%</h4>
-            </CardComponent>
+            <CardComponent
+              title={"Eficiencia do Berço"}
+              contentCard={"76%"}
+            ></CardComponent>
           </Col>
         </Row>
 
@@ -174,14 +226,15 @@ export default function Home() {
             </Row>
 
             <br />
+
             <Row>
               <Col md={12}>
                 <TableComponent />
               </Col>
             </Row>
           </Col>
-        </Row> */}
-      </Container>
+        </Row>
+      </Container> */}
     </Fragment>
   );
 }
