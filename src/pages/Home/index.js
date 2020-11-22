@@ -40,10 +40,10 @@ export default function Home() {
             ></CardComponent>
           </Col>{" "}
           <Col md={4}>
-            <CardComponent>
-              <p>Eficiencia do Berço</p>
-              <h4>76%</h4>
-            </CardComponent>
+            <CardComponent
+              title={"Eficiencia do Berço"}
+              contentCard={"76%"}
+            ></CardComponent>
           </Col>
         </Row>
 
@@ -71,6 +71,7 @@ export default function Home() {
             </Row>
 
             <br />
+
             <Row>
               <Col md={12}>
                 <TableComponent />

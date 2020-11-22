@@ -16,6 +16,7 @@ export default function CardComponent({ children, title, contentCard }) {
         <CardBody>
           <CardTitle tag="h5">{title}</CardTitle>
           <CardText className="mb-2 text-muted">{contentCard}</CardText>
+          {children}
         </CardBody>
       </Card>
     </div>
