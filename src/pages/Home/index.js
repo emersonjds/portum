@@ -91,6 +91,7 @@ export default function Home() {
     getEstadiaByLote('Granel Sólido').then(estadiasData => {
 
       const _estadiasData = estadiasData.map(estadiaItem => {
+
         //slaAtracacaoPrevLimit
         let slaAtracacaoPrevLimit = estadiaItem["Atracação Prevista"];
         var temp = slaAtracacaoPrevLimit.split(" ");
@@ -119,14 +120,16 @@ export default function Home() {
           estadiaItem["Desatracação Efetiva"]
         );
 
+        
 
-        return {
-          ...estadiaItem,
-          "SLA Previsto": diffDaysPrev == 0 ? 1 : diffDaysPrev,
-          "SLA Efetivo": diffDaysEfet,
-          "SLA Atracação Limit": slaAtracacaoPrevLimit,
-          "SLA Desatracação Limit": slaAtracacaoEfetLimit,
-        };
+
+          return {
+            ...estadiaItem,
+            "SLA Previsto": diffDaysPrev == 0 ? 1 : diffDaysPrev,
+            "SLA Efetivo": diffDaysEfet,
+            "SLA Atracação Limit": slaAtracacaoPrevLimit,
+            "SLA Desatracação Limit": slaAtracacaoEfetLimit,
+          };
       })
 
       setEstadias(_estadiasData)
