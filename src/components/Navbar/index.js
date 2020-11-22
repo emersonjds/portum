@@ -5,7 +5,9 @@ const NavbarComponent = () => {
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">Portum</NavbarBrand>
+        <NavbarBrand href="/">
+          Portum - Eficiencia em Berços Portuarios
+        </NavbarBrand>
         <Nav className="ml-auto" navbar>
           <NavItem>
             <NavLink href="#">Configurações</NavLink>
