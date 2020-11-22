@@ -17,7 +17,7 @@
 ## Usage
 
 1. Run `yarn` for install dependencies.<br />
-2. Run `yarn dev` and access `http://localhost:3000`.<br />
+2. Run `yarn start` and access `http://localhost:3000`.<br />
 
 ## License
 
