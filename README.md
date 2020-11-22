@@ -1,6 +1,6 @@
 ## Portum Platform
 
-<p align="center"> Hackathon Brasil Hack Export - plataforma disponivel em : https://hack-spectrum.netlify.app
+<p align="center"> Hackathon Brasil Hack Export - plataforma disponivel hein : http://portum.surge.sh/
 </p>
 
 <hr>
