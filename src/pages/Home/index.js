@@ -8,14 +8,27 @@ import CardComponent from "../../components/Card";
 import { Container } from "./styles";
 import TableComponent from "../../components/TableComponent";
 import icon from "../../assets/img/icon.png";
+import Weather from "../../components/Weather";
+import TabComponent from "../../components/TabComponent";
 
 export default function Home() {
   return (
     <Fragment>
       <NavbarComponent />
-
       <Container>
-        {/*first row*/}
+        <Row>
+          <Col md={2}>
+            <Weather />
+          </Col>
+          <Col md={10}>
+            <TabComponent />
+            <hr />
+          </Col>
+        </Row>
+      </Container>
+
+      {/* <Container>
+        
         <h2>Analise de 16/11 à 21/11</h2>
         <Row styles={{ marginBottom: "10px" }}>
           <Col md={2}>
@@ -40,10 +53,10 @@ export default function Home() {
             ></CardComponent>
           </Col>{" "}
           <Col md={4}>
-            <CardComponent>
-              <p>Eficiencia do Berço</p>
-              <h4>76%</h4>
-            </CardComponent>
+            <CardComponent
+              title={"Eficiencia do Berço"}
+              contentCard={"76%"}
+            ></CardComponent>
           </Col>
         </Row>
 
@@ -71,6 +84,7 @@ export default function Home() {
             </Row>
 
             <br />
+
             <Row>
               <Col md={12}>
                 <TableComponent />
@@ -78,7 +92,7 @@ export default function Home() {
             </Row>
           </Col>
         </Row>
-      </Container>
+      </Container> */}
     </Fragment>
   );
 }
