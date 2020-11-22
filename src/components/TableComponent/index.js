@@ -63,6 +63,7 @@ export default function TableComponent(props) {
             <th>SLA Previsto</th>
             <th>SLA Efetivo</th>
             <th>SLA Diff</th>
+            <th>SLA Diff %</th>
             <th>SLA Limit Prev</th>
             <th>SLA Limit Efet</th>
           </tr>
@@ -71,19 +72,19 @@ export default function TableComponent(props) {
           {estadias.splice(-30, 20).map((estadia, index) => {
             console.log(estadia);
 
-            const diffDaysPrev = diffDays(
-              estadia["Atracação Prevista"],
-              estadia["Desatracação Prevista"]
-            );
-            console.log(diffDaysPrev);
-            console.log("============");
+            // const diffDaysPrev = diffDays(
+            //   estadia["Atracação Prevista"],
+            //   estadia["Desatracação Prevista"]
+            // );
+            // console.log(diffDaysPrev);
+            // console.log("============");
 
-            const diffDaysEfet = diffDays(
-              estadia["Atracação Efetiva"],
-              estadia["Desatracação Efetiva"]
-            );
-            console.log(diffDaysEfet);
-            console.log("============");
+            // const diffDaysEfet = diffDays(
+            //   estadia["Atracação Efetiva"],
+            //   estadia["Desatracação Efetiva"]
+            // );
+            // console.log(diffDaysEfet);
+            // console.log("============");
 
             // Atracação Efetiva: "03/01/2017 09:00"
             // Atracação Prevista: "24/12/2016 07:30"
@@ -91,7 +92,7 @@ export default function TableComponent(props) {
             // Desatracação Efetiva: "06/01/2017 17:20"
             // Desatracação Prevista: "06/01/2017 18:00"
             // Especialidade da Carga Predominante: "Granel Sólido"
-            // Estadia Off-Shore: "Não"
+            // Estadia Off-Shore: H"Não"
             // Finalidade da Embarcação: "Transporte de Granel Sólido e Carga Geral"
             // Local(is) Atracação (área do porto > berço > cabeço): "CAIS COMERCIAL > B104 > 22-29"
             // Local(is) e Data(s) Reatracação (área do porto > berço > ca: "(CAIS COMERCIAL > B104 > 22-29 = 06/01/2017 17:10)"
@@ -103,18 +104,63 @@ export default function TableComponent(props) {
             // Tipo de Viagem Saída: "IMPORTAÇÃO/LONGO CURSO"
             // Área de Navegação: "IMPORT/EXPORT/LONGO CURSO"
 
+            let slaDiff = estadia["SLA Previsto"] - estadia["SLA Efetivo"];
+
+            let slaDiffPerc = slaDiff / estadia["SLA Previsto"];
+            slaDiffPerc = Math.ceil(slaDiffPerc);
+
+            let statusColorAtracacaoAtrasada = "";
+            if (slaDiff > 0) {
+              statusColorAtracacaoAtrasada = {
+                color: "red",
+                fontWeight: "bold",
+              };
+            } else {
+              statusColorAtracacaoAtrasada = {
+                color: "black",
+              };
+            }
+
+            let statusColorDesatracacaoAtrasada = "";
+            if (slaDiff > 0) {
+              statusColorDesatracacaoAtrasada = {
+                color: "red",
+                fontWeight: "bold",
+              };
+            } else {
+              statusColorDesatracacaoAtrasada = {
+                color: "black",
+              };
+            }
+
+            let statusColorBackgroundRow = "";
+            if (slaDiff > 0) {
+              statusColorBackgroundRow = {
+                background: "#ff00001a",
+              };
+            } else {
+              statusColorBackgroundRow = {
+                background: "white",
+              };
+            }
+
             return (
-              <tr>
+              <tr style={statusColorBackgroundRow}>
                 {/* <th>{estadia["Número do DUV"].slice(0, 10) + "..."}</th> */}
                 <td>{estadia["Bandeira da Embarcação"]}</td>
                 <td>Status</td>
                 <td>{estadia["Atracação Prevista"]}</td>
-                <td>{estadia["Atracação Efetiva"]}</td>
-                <td>{estadia["Desatracação Efetiva"]}</td>
+                <td style={statusColorAtracacaoAtrasada}>
+                  {estadia["Atracação Efetiva"]}
+                </td>
                 <td>{estadia["Desatracação Prevista"]}</td>
-                <td>{diffDaysPrev} Dias</td>
-                <td>{diffDaysEfet} Dias</td>
-                <td>{diffDaysEfet - diffDaysPrev}</td>
+                <td style={statusColorDesatracacaoAtrasada}>
+                  {estadia["Desatracação Efetiva"]}
+                </td>
+                <td>{estadia["SLA Previsto"]}</td>
+                <td>{estadia["SLA Efetivo"]}</td>
+                <td>{slaDiff}</td>
+                <td>{slaDiffPerc}%</td>
                 <td>{estadia["SLA Atracação Limit"]}</td>
                 <td>{estadia["SLA Desatracação Limit"]}</td>
               </tr>
