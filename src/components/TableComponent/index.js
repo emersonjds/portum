@@ -53,7 +53,6 @@ function diffDays(init, finish) {
   return diffDays + 1;
 }
 
-
 function diffHours(init, finish) {
   let dateInit = init;
   var temp = dateInit.split(" ");
@@ -77,9 +76,8 @@ function diffHours(init, finish) {
 }
 
 export default function TableComponent(props) {
-
-  const [slicedEstadias, setSlicedEstadias] = useState([])
-  const [tabuaMares, setTabuaMares] = useState([])
+  const [slicedEstadias, setSlicedEstadias] = useState([]);
+  const [tabuaMares, setTabuaMares] = useState([]);
 
   const { estadias } = props;
 
@@ -89,9 +87,8 @@ export default function TableComponent(props) {
     getClimaTempoTabuaMares(50225, 12, 19).then((tabuaMaresData) => {
       console.log("getClimaTempoTabuaMares RESPONSE", tabuaMaresData);
       setTabuaMares(tabuaMaresData);
-
-    })
-  }, [])
+    });
+  }, []);
 
   useEffect(() => {
     const items = props.estadias.splice(-30, 20).map((estadia, index) => {
@@ -133,8 +130,7 @@ export default function TableComponent(props) {
       return estadia;
     });
 
-    setSlicedEstadias(items)
-
+    setSlicedEstadias(items);
   }, [tabuaMares]);
 
   return (
@@ -223,35 +219,57 @@ export default function TableComponent(props) {
               };
             }
 
-          // data: "23/12"
-          // item1: {horario: "00:30", metros: "1.2"}
-          // item2: {horario: "06:23", metros: "0.5"}
-          // item3: {horario: "13:47", metros: "1.2"}
-          // item4: {horario: "18:58", metros: "0.2"}
-          // item5: {horario: "", metros: null}
-          // item6: {horario: null, metros: null}
-
-            let mare = ''
-            if(estadia["tabuaMareItemMatch"].length == 0){
-              mare = 'Sem Info'
-            }
-            else{
-              estadia["tabuaMareItemMatch"].forEach(element => {
+            let mare = "";
+            if (estadia["tabuaMareItemMatch"].length == 0) {
+              mare = "Sem Info";
+            } else {
+              estadia["tabuaMareItemMatch"].forEach((element) => {
                 // console.log(element)
-                if(element.item1.horario != "" && element.item1.horario != null){
-                  mare += element.item1.horario + ' hs - ' + element.item1.metros + ' m \n'
+                if (
+                  element.item1.horario != "" &&
+                  element.item1.horario != null
+                ) {
+                  mare += `${element.item1.horario} hs ${element.item1.metros} m \r\n`;
                 }
-                if (element.item2.horario != "" && element.item2.horario != null) {
-                  mare += element.item2.horario + " hs - " + element.item2.metros + " m \n";
+                if (
+                  element.item2.horario != "" &&
+                  element.item2.horario != null
+                ) {
+                  mare +=
+                    element.item2.horario +
+                    " hs - " +
+                    element.item2.metros +
+                    " m \n";
                 }
-                if (element.item3.horario != "" && element.item3.horario != null) {
-                  mare += element.item3.horario + " hs - " + element.item3.metros + " m \n";
+                if (
+                  element.item3.horario != "" &&
+                  element.item3.horario != null
+                ) {
+                  mare +=
+                    element.item3.horario +
+                    " hs - " +
+                    element.item3.metros +
+                    " m \n";
                 }
-                if (element.item4.horario != "" && element.item4.horario != null) {
-                  mare += element.item4.horario + " hs - " + element.item4.metros + " m \n";
+                if (
+                  element.item4.horario != "" &&
+                  element.item4.horario != null
+                ) {
+                  mare +=
+                    element.item4.horario +
+                    " hs - " +
+                    element.item4.metros +
+                    " m \n";
                 }
-                if (element.item4.horario != "" && element.item4.horario != null) {
-                  mare += element.item4.horario + " hs - " + element.item4.metros + " m \n";
+                if (
+                  element.item4.horario != "" &&
+                  element.item4.horario != null
+                ) {
+                  mare +=
+                    element.item4.horario +
+                    " hs - " +
+                    element.item4.metros +
+                    " m \n";
                 }
               });
             }
@@ -260,9 +278,11 @@ export default function TableComponent(props) {
               <tr style={statusColorBackgroundRow}>
                 <td
                   style={{
-                    fontSize:12,
+                    fontSize: 12,
                   }}
-                >{mare}</td>
+                >
+                  {mare}
+                </td>
                 <td>{estadia["Bandeira da Embarcação"]}</td>
                 <td>{estadia["Status"]}</td>
                 <td>{estadia["Atracação Prevista"]}</td>
