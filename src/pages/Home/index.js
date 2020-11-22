@@ -2,7 +2,17 @@ import React, { Fragment, useState, useEffect } from "react";
 
 import NavbarComponent from "../../components/Navbar";
 import Chart from "../../components/Chart";
-import { Row, Col, Button, Table, Badge } from "reactstrap";
+import {
+  Row,
+  Col,
+  Button,
+  Table,
+  Badge,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "reactstrap";
 import CardComponent from "../../components/Card";
 
 import { Container } from "./styles";
@@ -74,6 +84,7 @@ export default function Home() {
 
   const [estadias, setEstadias] = useState([])
   const [tabuaMares, setTabuaMares] = useState([])
+  
 
   useEffect(() => {
 
@@ -111,7 +122,7 @@ export default function Home() {
 
         return {
           ...estadiaItem,
-          "SLA Previsto": diffDaysPrev,
+          "SLA Previsto": diffDaysPrev == 0 ? 1 : diffDaysPrev,
           "SLA Efetivo": diffDaysEfet,
           "SLA Atracação Limit": slaAtracacaoPrevLimit,
           "SLA Desatracação Limit": slaAtracacaoEfetLimit,
@@ -130,6 +141,7 @@ export default function Home() {
 
   return (
     <Fragment>
+      
       <NavbarComponent />
       <Container>
         <Row>

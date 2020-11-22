@@ -17,9 +17,8 @@ import CardComponent from "../Card";
 import TableComponent from "../TableComponent";
 
 export default function TabComponent(props) {
-
   const [activeTab, setActiveTab] = useState("1");
-  const {dataSource} = props
+  const { dataSource } = props;
 
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
@@ -45,10 +44,7 @@ export default function TabComponent(props) {
               toggle("2");
             }}
           >
-            <span style={{ color: "black" }}>
-              {" "}
-              Ultimos 7 dias
-            </span>
+            <span style={{ color: "black" }}> Ultimos 7 dias</span>
           </NavLink>
         </NavItem>
         <NavItem>
@@ -58,9 +54,7 @@ export default function TabComponent(props) {
               toggle("3");
             }}
           >
-            <span style={{  color: "black" }}>
-              Embarcações
-            </span>
+            <span style={{ color: "black" }}>Embarcações</span>
           </NavLink>
         </NavItem>
       </Nav>
@@ -81,16 +75,17 @@ export default function TabComponent(props) {
             </Col>
             <Col md={2}>
               <CardComponent
-                title={"Navios Esperados"}
-                contentCard={"63"}
-              ></CardComponent>
-            </Col>
-            <Col md={3}>
-              <CardComponent
                 title={" Atracados Agora"}
                 contentCard={"18"}
               ></CardComponent>
             </Col>
+            <Col md={3}>
+              <CardComponent
+                title={"Navios Esperados"}
+                contentCard={"63"}
+              ></CardComponent>
+            </Col>
+
             <Col md={3}>
               <CardComponent title={"Eficiencia do Berço"} bkgColor="#fcd33f">
                 <h5>76%</h5>
@@ -102,7 +97,7 @@ export default function TabComponent(props) {
 
           <Row>
             <Col md={12}>
-              <TableComponent estadias={dataSource}/>
+              <TableComponent estadias={dataSource} />
             </Col>
           </Row>
         </TabPane>
