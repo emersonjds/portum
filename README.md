@@ -24,7 +24,7 @@
 
 ![Home](home.png "Home Portum")
 
-- Visao de atracagem d - 7 -
+- Visao de atracagem d - 7
 
 ![Home_2](home_2.png "Home Portum 2")
 
