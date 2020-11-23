@@ -9,7 +9,6 @@
 
 - [x] React JS
 - [x] Axios
-- [x] Axios
 - [x] Reactstrap
 - [x] Styled Components
 - [x] Surge
