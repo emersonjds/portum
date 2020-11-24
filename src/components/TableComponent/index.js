@@ -8,14 +8,6 @@ const API_URL = "https://brazik-hack-export.uc.r.appspot.com";
 console.log("moment", moment);
 moment.locale("pt-br");
 
-// var before = moment('2017.02.12 09:00','YYYY.MM.DD HH:mm');
-// var now = moment();
-
-// console.log(
-//   moment(now - before)
-//   .format('D[ day(s)] H[ hour(s)] m[ minute(s)] s[ second(s) ago.]')
-// );
-
 const getClimaTempoTabuaMares = async (cod, mes, ano) => {
   const url = `${API_URL}/tabua_mares/${cod}/${mes}/${ano}`;
 
@@ -34,10 +26,6 @@ function diffDays(init, finish) {
   var temp = dateFinish.split(" ");
   dateFinish = temp[0].split("/").reverse().join("-") + " " + temp[1];
 
-  // console.log(
-  //   estadia["Atracação Prevista"],
-  //   estadia["Desatracação Prevista"]
-  // );
   console.log(dateInit, dateFinish);
 
   dateFinish = new Date(dateFinish);
@@ -47,8 +35,6 @@ function diffDays(init, finish) {
   var finish = moment(dateFinish, "DD-MM-YYYY HH:mm");
 
   var diffDays = finish.diff(init, "days");
-  // console.log(diffDays);
-  // console.log("============");
 
   return diffDays + 1;
 }
@@ -159,26 +145,6 @@ export default function TableComponent(props) {
         </thead>
         <tbody>
           {slicedEstadias.map((estadia, index) => {
-            // console.log(estadia);
-
-            // Atracação Efetiva: "03/01/2017 09:00"
-            // Atracação Prevista: "24/12/2016 07:30"
-            // Bandeira da Embarcação: "Filipinas"
-            // Desatracação Efetiva: "06/01/2017 17:20"
-            // Desatracação Prevista: "06/01/2017 18:00"
-            // Especialidade da Carga Predominante: "Granel Sólido"
-            // Estadia Off-Shore: H"Não"
-            // Finalidade da Embarcação: "Transporte de Granel Sólido e Carga Geral"
-            // Local(is) Atracação (área do porto > berço > cabeço): "CAIS COMERCIAL > B104 > 22-29"
-            // Local(is) e Data(s) Reatracação (área do porto > berço > ca: "(CAIS COMERCIAL > B104 > 22-29 = 06/01/2017 17:10)"
-            // Motivo de Atracação: "Descarga"
-            // Número do DUV: "c9b5640b45500aff8931d5a066cdf4be"
-            // Porto de estadia atual: "BRFOR - FORTALEZA (MUCURIPE)"
-            // Tipo de Embarcação: "Graneleiro"
-            // Tipo de Viagem Chegada: "NÃO INFORMADO"
-            // Tipo de Viagem Saída: "IMPORTAÇÃO/LONGO CURSO"
-            // Área de Navegação: "IMPORT/EXPORT/LONGO CURSO"
-
             let slaDiff = estadia["SLA Previsto"] - estadia["SLA Efetivo"];
 
             let slaDiffPerc = slaDiff / estadia["SLA Previsto"];

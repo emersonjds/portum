@@ -28,7 +28,7 @@ const getEstadiaByLote = async (loteType) => {
 };
 
 const getClimaTempoTabuaMares = async (cod, mes, ano) => {
-  const url = `${API_URL}/tabua_mares/50225/12/19`
+  const url = `${API_URL}/tabua_mares/50225/12/19`;
 
   const response = await fetch(url);
   console.log(response);
@@ -73,8 +73,6 @@ function diffHours(init, finish) {
   var temp = dateFinish.split(" ");
   dateFinish = temp[0].split("/").reverse().join("-") + " " + temp[1];
 
-  // console.log(dateInit, dateFinish);
-
   dateFinish = new Date(dateFinish);
   dateInit = new Date(dateInit);
 
@@ -86,129 +84,97 @@ function diffHours(init, finish) {
   return diffDays;
 }
 
-
 export default function Home() {
   const [estadias, setEstadias] = useState([]);
   const [tabuaMares, setTabuaMares] = useState([]);
 
   useEffect(() => {
-
-    getEstadiaByLote('Granel Sólido').then(estadiasData => {
-
+    getEstadiaByLote("Granel Sólido").then((estadiasData) => {
       // getClimaTempoTabuaMares(50225, 11, 19).then((tabuaMaresData) => {
       //   console.log("getClimaTempoTabuaMares RESPONSE", tabuaMaresData);
       //   setTabuaMares(tabuaMaresData);
 
+      const _estadiasData = estadiasData.map((estadiaItem) => {
+        //slaAtracacaoPrevLimit
+        let slaAtracacaoPrevLimit = estadiaItem["Atracação Prevista"];
+        var temp = slaAtracacaoPrevLimit.split(" ");
+        slaAtracacaoPrevLimit =
+          temp[0].split("/").reverse().join("-") + " " + temp[1];
+        slaAtracacaoPrevLimit = new Date(slaAtracacaoPrevLimit);
+        slaAtracacaoPrevLimit = slaAtracacaoPrevLimit.getHours() + 2;
 
-        const _estadiasData = estadiasData.map(estadiaItem => {
+        //slaAtracacaoEfetLimit
+        let slaAtracacaoEfetLimit = estadiaItem["Atracação Efetiva"];
+        var temp = slaAtracacaoEfetLimit.split(" ");
+        slaAtracacaoEfetLimit =
+          temp[0].split("/").reverse().join("-") + " " + temp[1];
+        slaAtracacaoEfetLimit = new Date(slaAtracacaoEfetLimit);
+        slaAtracacaoEfetLimit = slaAtracacaoEfetLimit.getHours() + 3;
 
-          // // Realiza chegagem na tabua de marés
-          // let dataAtracacaoPrev = estadiaItem["Atracação Prevista"];
-          // var temp = dataAtracacaoPrev.split(" ");
-          // dataAtracacaoPrev =
-          //   temp[0].split("/").reverse().join("-") + " " + temp[1];
-          // dataAtracacaoPrev = new Date(dataAtracacaoPrev);
-            
+        //difDaysAtracacao
+        const difDaysAtracacao = diffDays(
+          estadiaItem["Atracação Prevista"],
+          estadiaItem["Atracação Efetiva"]
+        );
 
-          // // console.log('HAHAH', dataAtracacaoPrev)
-          // const tabuaMareItemMatch = tabuaMaresData.filter(tabuaMareItem => {
+        //difDaysAtracacao
+        const difDaysDesatracacao = diffDays(
+          estadiaItem["Desatracação Prevista"],
+          estadiaItem["Desatracação Efetiva"]
+        );
 
-          //    let dataTabuaMare = tabuaMareItem.data + " " + tabuaMareItem.item1.horario
-          //    var temp = dataTabuaMare.split(" ");
-          //    dataTabuaMare =
-          //      temp[0].split("/").reverse().join("-") + " " + temp[1];
-          //    dataTabuaMare = new Date(dataTabuaMare);
-            
-          // });
+        //diffDaysPrev
+        const diffDaysPrev = diffDays(
+          estadiaItem["Atracação Prevista"],
+          estadiaItem["Desatracação Prevista"]
+        );
 
+        //diffDaysEfet
+        const diffDaysEfet = diffDays(
+          estadiaItem["Atracação Efetiva"],
+          estadiaItem["Desatracação Efetiva"]
+        );
 
-          //slaAtracacaoPrevLimit
-          let slaAtracacaoPrevLimit = estadiaItem["Atracação Prevista"];
-          var temp = slaAtracacaoPrevLimit.split(" ");
-          slaAtracacaoPrevLimit =
-            temp[0].split("/").reverse().join("-") + " " + temp[1];
-          slaAtracacaoPrevLimit = new Date(slaAtracacaoPrevLimit);
-          slaAtracacaoPrevLimit = slaAtracacaoPrevLimit.getHours() + 2;
-  
-          //slaAtracacaoEfetLimit
-          let slaAtracacaoEfetLimit = estadiaItem["Atracação Efetiva"];
-          var temp = slaAtracacaoEfetLimit.split(" ");
-          slaAtracacaoEfetLimit =
-            temp[0].split("/").reverse().join("-") + " " + temp[1];
-          slaAtracacaoEfetLimit = new Date(slaAtracacaoEfetLimit);
-          slaAtracacaoEfetLimit = slaAtracacaoEfetLimit.getHours() + 3;
-  
-          //difDaysAtracacao
-          const difDaysAtracacao = diffDays(
-            estadiaItem["Atracação Prevista"],
-            estadiaItem["Atracação Efetiva"]
-          );
-  
-          //difDaysAtracacao
-          const difDaysDesatracacao = diffDays(
-            estadiaItem["Desatracação Prevista"],
-            estadiaItem["Desatracação Efetiva"]
-          );
-  
-          //diffDaysPrev
-          const diffDaysPrev = diffDays(
-            estadiaItem["Atracação Prevista"],
-            estadiaItem["Desatracação Prevista"]
-          );
-  
-          //diffDaysEfet
-          const diffDaysEfet = diffDays(
-            estadiaItem["Atracação Efetiva"],
-            estadiaItem["Desatracação Efetiva"]
-          );
-  
-          // Define RADOM para preenchimento
-          let statusEmbarcacao = '';
-  
-          const randomDesatracado = getRandomInt(0, 4)
-  
-          if (randomDesatracado == 0) {
-            estadiaItem["Atracação Prevista"] = "";
-            estadiaItem["Atracação Efetiva"] = "";
-            estadiaItem["Desatracação Prevista"] = "";
-            estadiaItem["Desatracação Efetiva"] = "";
-  
-            statusEmbarcacao = "Aguardando Autorizacao";
-          } else if (randomDesatracado == 1) {
-            estadiaItem["Atracação Efetiva"] = "";
-            estadiaItem["Desatracação Efetiva"] = "";
-  
-            statusEmbarcacao = "A Atracar";
-          } else if (randomDesatracado == 2) {
-            estadiaItem["Desatracação Efetiva"] = "";
-  
-            statusEmbarcacao = "Atracado";
-          } else if (randomDesatracado == 3) {
-            statusEmbarcacao = "Desatracado";
-          }
-  
-          estadiaItem['Status'] = statusEmbarcacao
-  
-          return {
-            ...estadiaItem,
-            "Dif Dias Atracação": difDaysAtracacao,
-            "Dif Dias Desatracação": difDaysDesatracacao,
-            "SLA Previsto": diffDaysPrev == 0 ? 1 : diffDaysPrev,
-            "SLA Efetivo": diffDaysEfet,
-            "SLA Atracação Limit": slaAtracacaoPrevLimit,
-            "SLA Desatracação Limit": slaAtracacaoEfetLimit,
-          };
-        })
-  
-        setEstadias(_estadiasData)
+        // Define RADOM para preenchimento
+        let statusEmbarcacao = "";
+
+        const randomDesatracado = getRandomInt(0, 4);
+
+        if (randomDesatracado == 0) {
+          estadiaItem["Atracação Prevista"] = "";
+          estadiaItem["Atracação Efetiva"] = "";
+          estadiaItem["Desatracação Prevista"] = "";
+          estadiaItem["Desatracação Efetiva"] = "";
+
+          statusEmbarcacao = "Aguardando Autorizacao";
+        } else if (randomDesatracado == 1) {
+          estadiaItem["Atracação Efetiva"] = "";
+          estadiaItem["Desatracação Efetiva"] = "";
+
+          statusEmbarcacao = "A Atracar";
+        } else if (randomDesatracado == 2) {
+          estadiaItem["Desatracação Efetiva"] = "";
+
+          statusEmbarcacao = "Atracado";
+        } else if (randomDesatracado == 3) {
+          statusEmbarcacao = "Desatracado";
+        }
+
+        estadiaItem["Status"] = statusEmbarcacao;
+
+        return {
+          ...estadiaItem,
+          "Dif Dias Atracação": difDaysAtracacao,
+          "Dif Dias Desatracação": difDaysDesatracacao,
+          "SLA Previsto": diffDaysPrev == 0 ? 1 : diffDaysPrev,
+          "SLA Efetivo": diffDaysEfet,
+          "SLA Atracação Limit": slaAtracacaoPrevLimit,
+          "SLA Desatracação Limit": slaAtracacaoEfetLimit,
+        };
       });
 
-    // })
-
-    // getClimaTempoTabuaMares(50225, 11, 19).then(climateData => {
-    //   console.log('getClimaTempoTabuaMares RESPONSE', climateData)
-    //   setTabuaMares(climateData)
-    // })
+      setEstadias(_estadiasData);
+    });
 
     getClimaTempoTabuaMares(50225, 11, 19).then((climateData) => {
       console.log("getClimaTempoTabuaMares RESPONSE", climateData);
@@ -230,143 +196,6 @@ export default function Home() {
           </Col>
         </Row>
       </Container>
-
-      {/* <Container>
-        
-        <h2>Analise de 16/11 à 21/11</h2>
-
-          
-          <Row>
-              <Col md={12}>
-              <Fragment>
-                <h3>Atracações da Semana</h3>
-                <Table size="sm">
-                  <thead>
-                  <tr>
-                    <th>Data</th>
-                    <th>Bandeira Embarcação</th>
-                    <th>Status</th>
-                    <th>Ent. Prevista</th>
-                    <th>Ent. Executada</th>
-                    <th>Sai. Prevista</th>
-                    <th>Sai. Executada</th>
-                    <th>Eficiencia</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  {estadias.splice(-30,20).map((estadia, index) => {
-
-                  console.log(estadia)
-
-                  const atracacaoPrevista = new Date(estadia['Atracação Prevista'])
-                  const destracacaoPrevista = new Date(estadia['Desatração Prevista'])
-
-                  console.log(atracacaoPrevista)
-                  console.log(destracacaoPrevista)
-
-                  // Atracação Efetiva: "03/01/2017 09:00"
-                  // Atracação Prevista: "24/12/2016 07:30"
-                  // Bandeira da Embarcação: "Filipinas"
-                  // Desatracação Efetiva: "06/01/2017 17:20"
-                  // Desatracação Prevista: "06/01/2017 18:00"
-                  // Especialidade da Carga Predominante: "Granel Sólido"
-                  // Estadia Off-Shore: "Não"
-                  // Finalidade da Embarcação: "Transporte de Granel Sólido e Carga Geral"
-                  // Local(is) Atracação (área do porto > berço > cabeço): "CAIS COMERCIAL > B104 > 22-29"
-                  // Local(is) e Data(s) Reatracação (área do porto > berço > ca: "(CAIS COMERCIAL > B104 > 22-29 = 06/01/2017 17:10)"
-                  // Motivo de Atracação: "Descarga"
-                  // Número do DUV: "c9b5640b45500aff8931d5a066cdf4be"
-                  // Porto de estadia atual: "BRFOR - FORTALEZA (MUCURIPE)"
-                  // Tipo de Embarcação: "Graneleiro"
-                  // Tipo de Viagem Chegada: "NÃO INFORMADO"
-                  // Tipo de Viagem Saída: "IMPORTAÇÃO/LONGO CURSO"
-                  // Área de Navegação: "IMPORT/EXPORT/LONGO CURSO"
-
-                    return <tr>
-                    <th>Data</th>
-                    <th>{estadia['Bandeira da Embarcação']}</th>
-                    <th>Status</th>
-                    <th>{estadia['Atracação Prevista']}</th>
-                    <th>{estadia['Atracação Efetiva']}</th>
-                    <th>{estadia['Desatracação Efetiva']}</th>
-                    <th>{estadia['Desatracação Prevista']}</th>
-                    <th>Eficiencia</th>
-                  </tr>
-                  })}
-
-                    </tbody>
-                </Table>
-              </Fragment>
-        
-          
-              </Col>
-            </Row>
-             
-        
-
-        {/* <Row styles={{ marginBottom: "10px" }}>
-          <Col md={2}>
-            <CardComponent
-              title={"Sla Executado"}
-              contentCard={"17:32"}
-            ></CardComponent>
-          </Col>
-          <Col md={2}>
-            <CardComponent
-              title={"Sla Executado"}
-              contentCard={"17:32"}
-            ></CardComponent>
-          </Col>
-          <Col md={2}>
-            <CardComponent title={"Clima"} contentCard={"31 C"}></CardComponent>
-          </Col>
-          <Col md={2}>
-            <CardComponent
-              title={"Maré para 21/11/20"}
-              contentCard={"Aviso de Ressacas Maritimas"}
-            ></CardComponent>
-          </Col>{" "}
-          <Col md={4}>
-            <CardComponent
-              title={"Eficiencia do Berço"}
-              contentCard={"76%"}
-            ></CardComponent>
-          </Col>
-        </Row>
-
-        <hr />
-        <Row>
-          <Col md={6}>
-            <Row>
-              <Col md={4}>
-                <CardComponent>
-                  <div>
-                    <p>
-                      <img src={icon} alt="" />
-                      Navios Esperados
-                    </p>
-                    <h4 style={{ textAlign: "center" }}>101</h4>
-                  </div>
-                </CardComponent>
-              </Col>
-              <Col md={4}>
-                <CardComponent>
-                  <p>Navios Atracados Agora</p>
-                  <h4>26</h4>
-                </CardComponent>
-              </Col>
-            </Row>
-
-            <br />
-
-            <Row>
-              <Col md={12}>
-                <TableComponent />
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </Container> */}
     </Fragment>
   );
 }
